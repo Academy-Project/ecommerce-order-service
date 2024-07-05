@@ -19,7 +19,7 @@ public class Order {
     @Column(nullable = false)
     private Long orderId;
     private Long userId;
-    private Long productId;
+    private String productId;
     private Integer quantity;
     private Double price;
     @Enumerated(EnumType.STRING)

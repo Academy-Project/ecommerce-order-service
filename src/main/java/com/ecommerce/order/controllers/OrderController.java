@@ -1,17 +1,24 @@
 package com.ecommerce.order.controllers;
 
+import com.ecommerce.order.clients.SagaCoordinator;
 import com.ecommerce.order.models.Order;
+import com.ecommerce.order.models.Product;
 import com.ecommerce.order.repositories.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ecommerce.order.responses.ResponseHandler;
+import lombok.AllArgsConstructor;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/orders")
+@AllArgsConstructor
 public class OrderController {
-    @Autowired
     private OrderRepository orderRepository;
+    private SagaCoordinator sagaCoordinator;
 
     @GetMapping("")
     public @ResponseBody Iterable<Order> getList(@RequestParam(required = false) String search) {
@@ -25,11 +32,8 @@ public class OrderController {
 
     // create by request body
     @PostMapping("")
-    public @ResponseBody boolean createV2(@RequestBody Order order) {
-        // TODO: validation class
-        orderRepository.save(order);
-        // TODO: update product price & stock
-        return true;
+    public ResponseEntity<?> create(@RequestBody Order order) {
+        return sagaCoordinator.createOrder(order);
     }
 
     // Delete - with query parameter

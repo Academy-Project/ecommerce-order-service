@@ -1,4 +1,5 @@
 package com.ecommerce.order.models;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,23 +11,9 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class Product {
-    private String productId;
-    private String name;
-    private String description;
-    private Long price;
-    private Integer stock;
-
-    private LocalDate createdAt;
-    private LocalDate lastModifiedAt;
-    private LocalDate deletedAt = null;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDate.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        lastModifiedAt = LocalDate.now();
-    }
+    private String id_product;
+    private String nama_product;
+    private String deskripsi_product;
+    private Integer harga_product;
+    private Integer stock_product;
 }
